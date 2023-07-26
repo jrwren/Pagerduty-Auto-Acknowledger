@@ -1,6 +1,6 @@
 # PAGERDUTY AUTO ACKNOWLEDGER
 
-because pagerduty notifications can get annoying to have to manually acknowledge each time. this lets you view your notifications async without your boss yelling at you :)
+because pagerduty notifications can get annoying to have to manually acknowledge each time. this lets you view your notifications async :)
 
 Usage:
 build the docker image, and run like so:
