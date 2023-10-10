@@ -1,0 +1,3 @@
+# noack contains a string per line (no regex)
+# If a page title matches any of these strings it will not be acked.
+avengers
