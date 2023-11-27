@@ -35,13 +35,14 @@ func checkAndAcknowledgeAlert() {
 		fmt.Println(err)
 		return
 	}
+incs:
 	for _, p := range eps.Incidents {
 		// ack all of the incidents
 		id := p.ID
 		// Don't ack pages.
-		for _, na := range noack {
-			if strings.Contains(p.Title, na) {
-				continue
+		for i := range noack {
+			if strings.Contains(p.Title, noack[i]) {
+				continue incs
 			}
 		}
 		client.ManageIncidentsWithContext(context.TODO(), email, []pagerduty.ManageIncidentsOptions{{ID: id, Status: "acknowledged"}})
@@ -89,5 +90,6 @@ func readnoack() error {
 		}
 		noack = append(noack, t)
 	}
+	fmt.Printf("noack set to: %#v\n", noack)
 	return nil
 }
