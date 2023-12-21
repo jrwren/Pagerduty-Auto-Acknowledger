@@ -39,6 +39,12 @@ incs:
 	for _, p := range eps.Incidents {
 		// ack all of the incidents
 		id := p.ID
+		if len(p.Acknowledgements) > 0 {
+			continue
+		}
+		if strings.ToLower(p.Urgency) == "low" {
+			continue
+		}
 		// Don't ack pages.
 		for i := range noack {
 			if strings.Contains(p.Title, noack[i]) {
@@ -46,7 +52,8 @@ incs:
 			}
 		}
 		client.ManageIncidentsWithContext(context.TODO(), email, []pagerduty.ManageIncidentsOptions{{ID: id, Status: "acknowledged"}})
-		fmt.Printf("%s acknowledged: %s", time.Now().Format(time.RFC3339), p.Title)
+		fmt.Printf("%s acknowledged: Title: %s  https://ciscospark.pagerduty.com/incidents/%s",
+			time.Now().Format(time.RFC3339), p.Title, id)
 		if !strings.HasSuffix(p.Title, "\n") {
 			fmt.Println()
 		}
